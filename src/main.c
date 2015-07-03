@@ -7,13 +7,16 @@ WEBSITE: http://www.marcellobrivio.com
 */
 
 #include <pebble.h>
-    
+
+// Define UI elements
 static Window *s_main_window;
 static TextLayer *s_time_layer;
-static int s_uptime = 0;
 static TextLayer *s_uptime_layer;
 static TextLayer *s_bluetooth_layer;
 static TextLayer *s_battery_layer;
+
+// Define Watchface Uptime
+static int s_uptime = 0;
 
 // TIME AND DATE //
 static void update_time() {
@@ -61,7 +64,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   
   // Create uptime TextLayer
-  s_uptime_layer = text_layer_create(GRect(0, 98, 144, 20));
+  s_uptime_layer = text_layer_create(GRect(0, 98, 144, 14));
   text_layer_set_background_color(s_uptime_layer, GColorBlack);
   text_layer_set_text_color(s_uptime_layer, GColorClear);
   text_layer_set_text(s_uptime_layer, "LOG UPTIME: 0h 0m 0s");
@@ -69,7 +72,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_uptime_layer, GTextAlignmentLeft);
   
   // Create Bluetooth TextLayer
-  s_bluetooth_layer = text_layer_create(GRect(0, 112, 144, 20));
+  s_bluetooth_layer = text_layer_create(GRect(0, 112, 144, 14));
   text_layer_set_background_color(s_bluetooth_layer, GColorBlack);
   text_layer_set_text_color(s_bluetooth_layer, GColorClear);
   text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): N");
@@ -77,7 +80,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_bluetooth_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
-  s_battery_layer = text_layer_create(GRect(0, 126, 144, 20));
+  s_battery_layer = text_layer_create(GRect(0, 126, 144, 14));
   text_layer_set_background_color(s_battery_layer, GColorBlack);
   text_layer_set_text_color(s_battery_layer, GColorClear);
   text_layer_set_text(s_battery_layer, "BATTERY LEVEL: N/A");
