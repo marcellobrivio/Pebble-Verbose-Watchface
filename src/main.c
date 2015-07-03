@@ -61,7 +61,7 @@ static void battery_handler(BatteryChargeState new_state) {
 // WINDOW CREATION //
 static void main_window_load(Window *window) {
   // Create time TextLayer
-  s_time_layer = text_layer_create(GRect(0, 0, 144, 168));
+  s_time_layer = text_layer_create(GRect(0, -1, 144, 169)); // Note the negative Y-axis value for better positioning
   text_layer_set_background_color(s_time_layer, GColorBlack);
   text_layer_set_text_color(s_time_layer, GColorClear);
   text_layer_set_text(s_time_layer, "TIME: 00:00");
@@ -69,7 +69,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   
   // Create uptime TextLayer
-  s_uptime_layer = text_layer_create(GRect(0, 98, 144, 14));
+  s_uptime_layer = text_layer_create(GRect(0, 97, 144, 14)); // A single text line is 14px high
   text_layer_set_background_color(s_uptime_layer, GColorBlack);
   text_layer_set_text_color(s_uptime_layer, GColorClear);
   text_layer_set_text(s_uptime_layer, "LOG UPTIME: 0h 0m 0s");
@@ -77,7 +77,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_uptime_layer, GTextAlignmentLeft);
   
   // Create Bluetooth TextLayer
-  s_bluetooth_layer = text_layer_create(GRect(0, 112, 144, 14));
+  s_bluetooth_layer = text_layer_create(GRect(0, 111, 144, 14));
   text_layer_set_background_color(s_bluetooth_layer, GColorBlack);
   text_layer_set_text_color(s_bluetooth_layer, GColorClear);
   text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): N");
@@ -85,7 +85,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_bluetooth_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
-  s_battery_layer = text_layer_create(GRect(0, 126, 144, 14));
+  s_battery_layer = text_layer_create(GRect(0, 125, 144, 14));
   text_layer_set_background_color(s_battery_layer, GColorBlack);
   text_layer_set_text_color(s_battery_layer, GColorClear);
   text_layer_set_text(s_battery_layer, "BATTERY LEVEL: N/A");
@@ -93,7 +93,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
-  s_weather_layer = text_layer_create(GRect(0, 140, 144, 28));
+  s_weather_layer = text_layer_create(GRect(0, 139, 144, 28));
   text_layer_set_background_color(s_weather_layer, GColorBlack);
   text_layer_set_text_color(s_weather_layer, GColorClear);
   text_layer_set_text(s_weather_layer, "TEMPERATURE: Loading...\nWEATHER: Loading...");
@@ -167,7 +167,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   // Store incoming information
   static char temperature_buffer[8];
   static char conditions_buffer[32];
-  static char weather_layer_buffer[32];
+  static char weather_layer_buffer[64];
   
   // Read first item
   Tuple *t = dict_read_first(iterator);
@@ -177,7 +177,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Which key was received?
     switch(t->key) {
     case KEY_TEMPERATURE:
-      snprintf(temperature_buffer, sizeof(temperature_buffer), "%dC", (int)t->value->int32);
+      snprintf(temperature_buffer, sizeof(temperature_buffer), "%d °C", (int)t->value->int32);
       break;
     case KEY_CONDITIONS:
       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
