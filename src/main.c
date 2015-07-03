@@ -13,6 +13,7 @@ static TextLayer *s_time_layer;
 static int s_uptime = 0;
 static TextLayer *s_uptime_layer;
 static TextLayer *s_bluetooth_layer;
+static TextLayer *s_battery_layer;
 
 // TIME AND DATE //
 static void update_time() {
@@ -41,6 +42,14 @@ static void bt_handler(bool connected) {
   }
 }
 
+// BATTERY STATUS
+static void battery_handler(BatteryChargeState new_state) {
+  // Write to buffer and display
+  static char s_battery_buffer[32];
+  snprintf(s_battery_buffer, sizeof(s_battery_buffer), "BATTERY LEVEL: %d%%", new_state.charge_percent);
+  text_layer_set_text(s_battery_layer, s_battery_buffer);
+}
+
 // WINDOW CREATION //
 static void main_window_load(Window *window) {
   // Create time TextLayer
@@ -67,16 +76,28 @@ static void main_window_load(Window *window) {
   text_layer_set_font(s_bluetooth_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_bluetooth_layer, GTextAlignmentLeft);
   
+  // Create Battery TextLayer
+  s_battery_layer = text_layer_create(GRect(0, 126, 144, 20));
+  text_layer_set_background_color(s_battery_layer, GColorBlack);
+  text_layer_set_text_color(s_battery_layer, GColorClear);
+  text_layer_set_text(s_battery_layer, "BATTERY LEVEL: N/A");
+  text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
+  
+  // Make sure the time is displayed from the start
+  update_time();
+  
   // Show current connection state
   bt_handler(bluetooth_connection_service_peek());
+  
+  // Get the current battery level
+  battery_handler(battery_state_service_peek());
 
   // Add child layers to the Window's root layer
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_uptime_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_bluetooth_layer));
-  
-  // Make sure the time is displayed from the start
-  update_time();
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_battery_layer));
 }
 
 // WINDOW DESTRUCTION //
@@ -85,6 +106,7 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(s_time_layer);
   text_layer_destroy(s_uptime_layer);
   text_layer_destroy(s_bluetooth_layer);
+  text_layer_destroy(s_battery_layer);
 }
 
 // TIME-RECURSIVE FUNCTIONS
@@ -122,11 +144,14 @@ static void init() {
   // Show the Window on the watch, with animated=true
   window_stack_push(s_main_window, true);
   
-  // Subscribe to Bluetooth updates
-  bluetooth_connection_service_subscribe(bt_handler);
-  
   // Register with TickTimerService
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  
+  // Register to Bluetooth updates
+  bluetooth_connection_service_subscribe(bt_handler);
+  
+  // Register to the Battery State Service
+  battery_state_service_subscribe(battery_handler);
 }
 
 static void deinit() {
