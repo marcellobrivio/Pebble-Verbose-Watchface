@@ -34,7 +34,7 @@ static void update_time() {
 
   // Write the current hours and minutes into the buffer with funny copy...
   // Refer to http://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm
-  strftime(buffer, sizeof buffer, "MILITARY TIME: %H:%M%nCIVILIAN TIME: %I:%M %p%nSECONDS: %S/59%nDATE: %F%nWEEKDAY: %A (%u/7)%nWEEK NUMBER: %W/53%nDAY NUMBER: %j/365", tick_time);
+  strftime(buffer, sizeof buffer, "MILITARY TIME: %H:%M%nCIVILIAN TIME: %I:%M %p%nSECONDS: %S/59%nDATE: %F%nDAY: %A (%u/7)%nWEEK NUMBER: %W/53%nDAY NUMBER: %j/365", tick_time);
     
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
@@ -61,7 +61,7 @@ static void battery_handler(BatteryChargeState new_state) {
 // WINDOW CREATION //
 static void main_window_load(Window *window) {
   // Create time TextLayer
-  s_time_layer = text_layer_create(GRect(0, -3, 150, 171)); // Note the negative Y-axis value for better positioning. Width set to 150 to avoid bad word wrapping
+  s_time_layer = text_layer_create(GRect(0, -3, 144, 171)); // Note the negative Y-axis value for better positioning.
   text_layer_set_background_color(s_time_layer, GColorBlack);
   text_layer_set_text_color(s_time_layer, GColorClear);
   text_layer_set_text(s_time_layer, "TIME: 00:00");
@@ -69,7 +69,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   
   // Create Bluetooth TextLayer
-  s_bluetooth_layer = text_layer_create(GRect(0, 95, 150, 14)); // A single text line is 14px high
+  s_bluetooth_layer = text_layer_create(GRect(0, 95, 144, 14)); // A single text line is 14px high
   text_layer_set_background_color(s_bluetooth_layer, GColorBlack);
   text_layer_set_text_color(s_bluetooth_layer, GColorClear);
   text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): N");
@@ -77,7 +77,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_bluetooth_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
-  s_battery_layer = text_layer_create(GRect(0, 109, 150, 14));
+  s_battery_layer = text_layer_create(GRect(0, 109, 144, 14));
   text_layer_set_background_color(s_battery_layer, GColorBlack);
   text_layer_set_text_color(s_battery_layer, GColorClear);
   text_layer_set_text(s_battery_layer, "BATTERY LEVEL: N/A");
@@ -85,7 +85,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
-  s_weather_layer = text_layer_create(GRect(0, 123, 150, 28));
+  s_weather_layer = text_layer_create(GRect(0, 123, 144, 28));
   text_layer_set_background_color(s_weather_layer, GColorBlack);
   text_layer_set_text_color(s_weather_layer, GColorClear);
   text_layer_set_text(s_weather_layer, "TEMPERATURE: Loading...\nWEATHER: Loading...");
@@ -93,7 +93,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   
   // Create uptime TextLayer
-  s_uptime_layer = text_layer_create(GRect(0, 151, 150, 14)); 
+  s_uptime_layer = text_layer_create(GRect(0, 151, 144, 14)); 
   text_layer_set_background_color(s_uptime_layer, GColorBlack);
   text_layer_set_text_color(s_uptime_layer, GColorClear);
   text_layer_set_text(s_uptime_layer, "LOG UPTIME: 0h 0m 0s");
