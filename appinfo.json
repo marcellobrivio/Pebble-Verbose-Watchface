@@ -1,0 +1,26 @@
+{
+    "appKeys": {
+        "KEY_CONDITIONS": 1,
+        "KEY_TEMPERATURE": 0
+    },
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "marcello.brivio@gmail.com",
+    "longName": "Pebble Verbose Watchface",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "Verbose Watchface",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "3e268845-0483-4ff3-b40b-53cadd437407",
+    "versionLabel": "1.04",
+    "watchapp": {
+        "watchface": true
+    }
+}
