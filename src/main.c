@@ -42,11 +42,31 @@ static void update_time() {
 
 // BLUETOOTH CONNECTION CHECKER
 static void bt_handler(bool connected) {
-  // Show current connection state
+  // Show current connection state and inverts background/foreground combination
   if (connected) {
     text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): Y");
+    text_layer_set_background_color(s_time_layer, GColorBlack);
+    text_layer_set_text_color(s_time_layer, GColorClear);
+    text_layer_set_background_color(s_bluetooth_layer, GColorBlack);
+    text_layer_set_text_color(s_bluetooth_layer, GColorClear);
+    text_layer_set_background_color(s_battery_layer, GColorBlack);
+    text_layer_set_text_color(s_battery_layer, GColorClear);
+    text_layer_set_background_color(s_weather_layer, GColorBlack);
+    text_layer_set_text_color(s_weather_layer, GColorClear);
+    text_layer_set_background_color(s_uptime_layer, GColorBlack);
+    text_layer_set_text_color(s_uptime_layer, GColorClear);
   } else {
     text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): N");
+    text_layer_set_background_color(s_time_layer, GColorClear);
+    text_layer_set_text_color(s_time_layer, GColorBlack);
+    text_layer_set_background_color(s_bluetooth_layer, GColorClear);
+    text_layer_set_text_color(s_bluetooth_layer, GColorBlack);
+    text_layer_set_background_color(s_battery_layer, GColorClear);
+    text_layer_set_text_color(s_battery_layer, GColorBlack);
+    text_layer_set_background_color(s_weather_layer, GColorClear);
+    text_layer_set_text_color(s_weather_layer, GColorBlack);
+    text_layer_set_background_color(s_uptime_layer, GColorClear);
+    text_layer_set_text_color(s_uptime_layer, GColorBlack);
   }
 }
 
@@ -62,40 +82,40 @@ static void battery_handler(BatteryChargeState new_state) {
 static void main_window_load(Window *window) {
   // Create time TextLayer
   s_time_layer = text_layer_create(GRect(0, -3, 144, 171)); // Note the negative Y-axis value for better positioning.
-  text_layer_set_background_color(s_time_layer, GColorBlack);
-  text_layer_set_text_color(s_time_layer, GColorClear);
+  text_layer_set_background_color(s_time_layer, GColorClear);
+  text_layer_set_text_color(s_time_layer, GColorBlack);
   text_layer_set_text(s_time_layer, "TIME: 00:00");
   text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentLeft);
   
   // Create Bluetooth TextLayer
   s_bluetooth_layer = text_layer_create(GRect(0, 95, 144, 14)); // A single text line is 14px high
-  text_layer_set_background_color(s_bluetooth_layer, GColorBlack);
-  text_layer_set_text_color(s_bluetooth_layer, GColorClear);
+  text_layer_set_background_color(s_bluetooth_layer, GColorClear);
+  text_layer_set_text_color(s_bluetooth_layer, GColorBlack);
   text_layer_set_text(s_bluetooth_layer, "CONNECTED (Y/N): N");
   text_layer_set_font(s_bluetooth_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_bluetooth_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
   s_battery_layer = text_layer_create(GRect(0, 109, 144, 14));
-  text_layer_set_background_color(s_battery_layer, GColorBlack);
-  text_layer_set_text_color(s_battery_layer, GColorClear);
+  text_layer_set_background_color(s_battery_layer, GColorClear);
+  text_layer_set_text_color(s_battery_layer, GColorBlack);
   text_layer_set_text(s_battery_layer, "BATTERY LEVEL: N/A");
   text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
   
   // Create Battery TextLayer
   s_weather_layer = text_layer_create(GRect(0, 123, 144, 28));
-  text_layer_set_background_color(s_weather_layer, GColorBlack);
-  text_layer_set_text_color(s_weather_layer, GColorClear);
+  text_layer_set_background_color(s_weather_layer, GColorClear);
+  text_layer_set_text_color(s_weather_layer, GColorBlack);
   text_layer_set_text(s_weather_layer, "TEMPERATURE: Loading...\nWEATHER: Loading...");
   text_layer_set_font(s_weather_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   
   // Create uptime TextLayer
   s_uptime_layer = text_layer_create(GRect(0, 151, 144, 14)); 
-  text_layer_set_background_color(s_uptime_layer, GColorBlack);
-  text_layer_set_text_color(s_uptime_layer, GColorClear);
+  text_layer_set_background_color(s_uptime_layer, GColorClear);
+  text_layer_set_text_color(s_uptime_layer, GColorBlack);
   text_layer_set_text(s_uptime_layer, "LOG UPTIME: 0h 0m 0s");
   text_layer_set_font(s_uptime_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_uptime_layer, GTextAlignmentLeft);
