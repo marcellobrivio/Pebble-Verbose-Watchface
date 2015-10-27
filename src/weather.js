@@ -8,9 +8,11 @@ var xhrRequest = function (url, type, callback) {
 };
 
 function locationSuccess(pos) {
+  // Paste your own API Key here. Required from Oct. 9 2015
+  var apikey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+     
   // Construct URL
-  var url = "http://api.openweathermap.org/data/2.5/weather?lat=" +
-      pos.coords.latitude + "&lon=" + pos.coords.longitude;
+  var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + pos.coords.latitude + "&lon=" + pos.coords.longitude + "&APPID=" + apikey;
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 
